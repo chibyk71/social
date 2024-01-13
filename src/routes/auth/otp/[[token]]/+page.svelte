@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { isfixed } from '$lib/util/headerFixed';
-    import type { PageData } from './$types';
+    import type { PageData } from '../$types';
     
     export let data: PageData;
     $isfixed = false

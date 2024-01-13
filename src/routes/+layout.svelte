@@ -3,6 +3,8 @@
     import "../app.postcss"
 	import { isfixed } from '$lib/util/headerFixed';
 	import Canvas from '$lib/comp/canvas.svelte';
+
+	export let data;
 </script>
 
 <div class="page-wraper" class:header-fixed={$isfixed}> 

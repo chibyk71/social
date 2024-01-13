@@ -22,6 +22,7 @@ declare global {
 			email: string;
 			email_verified: boolean;
 			name: string;
+			username: string;
 		};
 		type DatabaseSessionAttributes = {};
 	}

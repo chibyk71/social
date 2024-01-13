@@ -1,6 +1,13 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { isfixed } from '$lib/util/headerFixed';
+	import { UserRegular } from 'svelte-awesome-icons';
 	$isfixed = false;
+
+	export let form;
+
+	$: console.log(form);
+	
 </script>
 
 <!-- Welcome Start -->
@@ -14,9 +21,8 @@
 			<div class="join-area">
 				<div class="started">
 					<h1 class="title">Create an Account</h1>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
 				</div>
-				<form>
+				<form method="post" use:enhance id="reg">
 					<div class="mb-3 input-group input-group-icon">
 						<span class="input-group-text absolute left-0.5 top-0.5">
 							<div class="input-icon">
@@ -38,7 +44,15 @@
 								</svg>
 							</div>
 						</span>
-						<input type="text" class="form-control !pl-12" placeholder="Name" />
+						<input type="text" name="name" class="form-control !pl-12" placeholder="Name" />
+					</div>
+					<div class="mb-3 input-group input-group-icon">
+						<span class="input-group-text absolute left-0.5 top-0.5">
+							<div class="input-icon">
+								<UserRegular class="w-4 h-4 stroke-white" />
+							</div>
+						</span>
+						<input type="text" name="username" class="form-control !pl-12" placeholder="Email" />
 					</div>
 					<div class="mb-3 input-group input-group-icon">
 						<span class="input-group-text absolute left-0.5 top-0.5">
@@ -61,7 +75,7 @@
 								</svg>
 							</div>
 						</span>
-						<input type="email" class="form-control !pl-12" placeholder="Email" />
+						<input type="email" name="email" class="form-control !pl-12" placeholder="Email" />
 					</div>
 					<div class="mb-3 input-group input-group-icon">
 						<span class="input-group-text absolute left-0.5 top-0.5">
@@ -82,20 +96,17 @@
 								</svg>
 							</div>
 						</span>
-						<input type="password" class="form-control dz-password !pl-12" placeholder="Password" />
+						<input type="password" name="password" class="form-control dz-password !pl-12" placeholder="Password" />
 						<span class="input-group-text show-pass">
 							<i class="fa fa-eye-slash text-primary" />
 							<i class="fa fa-eye text-primary" />
 						</span>
 					</div>
 				</form>
-                <button type="submit" class="btn btn-primary btn-block mb-3">REGISTER</button>
+                <button form="reg" type="submit" class="btn btn-primary btn-block mb-3">REGISTER</button>
 				<div class="flex items-center justify-center">
-					<a href="javascript:void(0);" class="text-light text-center block"
-						>Don’t have an account?</a
-					>
-                    btn
-					<a href="login.html" class="btn-link block ml-3 text-underline">Signin here</a>
+					<a href={void(0)} class="text-light text-center block">Don’t have an account?</a>
+					<a href="/auth/login" class="btn-link block ml-3 text-underline">Signin here</a>
 				</div>
 			</div>
 		</div>

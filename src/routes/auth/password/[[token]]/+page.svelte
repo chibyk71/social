@@ -2,7 +2,7 @@
 	import { isfixed } from '$lib/util/headerFixed';
 
 	// import TopBar from '$lib/nav/topBar.svelte';
-    import type { PageData } from './$types';
+    import type { PageData } from '../$types';
     
     export let data: PageData;
     $isfixed = false
@@ -29,7 +29,7 @@
 									</svg>
 								</div>
 							</span>
-							<input type="password" class="form-control !pl-12 block w-full dz-password" placeholder="New Password">
+							<input name="password" type="password" class="form-control !pl-12 block w-full dz-password" placeholder="New Password">
 							<span class="input-group-text show-pass"> 
 								<i class="fa fa-eye-slash text-primary"></i>
 								<i class="fa fa-eye text-primary"></i>
@@ -44,14 +44,14 @@
 									</svg>
 								</div>
 							</span>
-							<input type="password" class="form-control !pl-12 block w-full dz-password" placeholder="Confirm Password">
+							<input name="confirm" type="password" class="form-control !pl-12 block w-full dz-password" placeholder="Confirm Password">
 							<span class="input-group-text show-pass"> 
 								<i class="fa fa-eye-slash text-primary"></i>
 								<i class="fa fa-eye text-primary"></i>
 							</span>
 						</div>
 					</form>
-					<button type="submit" class="btn btn-primary mb-3 btn-block text-center">SUBMIT</button>
+					<button type="submit" class="btn btn-primary mb-3 btn-block">SUBMIT</button>
 					<div class="flex items-center justify-center">
 						<a href={void(0)} class="text-light text-center block">Don’t have an account?</a>
 						<a href="/register" class="btn-link block ml-2 text-underline">SignUp here</a>

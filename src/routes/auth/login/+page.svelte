@@ -1,8 +1,13 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { isfixed } from '$lib/util/headerFixed';
     import type { PageData } from './$types';
     
     export let data: PageData;
+	export let form
+
+	$: console.log(form);
+	
     $isfixed = false
 </script>
  <!-- Welcome Start -->
@@ -15,7 +20,7 @@
 						<h1 class="title">Sign in</h1>
 						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
 					</div>
-					<form>
+					<form action="auth/login?/loginUser" method="post" use:enhance id="login">
 						<div class="mb-3 input-group input-group-icon">
 							<span class="input-group-text top-0.5 left-0.5 absolute">
 								<div class="input-icon">
@@ -25,7 +30,7 @@
 									</svg>
 								</div>
 							</span>
-							<input type="text" class="form-control w-full !pl-12" placeholder="Name">
+							<input type="email" name="email" class="form-control w-full !pl-12" placeholder="Email">
 						</div>
 						<div class="mb-3 input-group input-group-icon">
 							<span class="input-group-text top-0.5 left-0.5 absolute">
@@ -36,15 +41,15 @@
 									</svg>
 								</div>
 							</span>
-							<input type="password" class="form-control w-full !pl-12 dz-password" placeholder="Password">
+							<input type="password" name="password" class="form-control w-full !pl-12 dz-password" placeholder="Password">
 							<span class="input-group-text show-pass"> 
 								<i class="fa fa-eye-slash text-primary"></i>
 								<i class="fa fa-eye text-primary"></i>
 							</span>
 						</div>
 					</form>
-					<a href="forgot-password.html" class="btn-link block mb-3 text-end text-underline">Forgot Password</a>	
-					<button type="submit" class="btn btn-primary btn-block mb-3">SIGN IN</button>
+					<a href="forgotpassword" class="btn-link block mb-3 text-end text-underline">Forgot Password</a>	
+					<button form="login" type="submit" class="btn btn-primary btn-block mb-3">SIGN IN</button>
 					<div class="social-box">
 						<span>Or sign in with</span>
 						<div class="flex justify-between">
