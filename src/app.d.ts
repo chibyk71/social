@@ -1,6 +1,5 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { Connection } from "mysql2/promise";
 
 // for information about these interfaces
 declare global {
@@ -17,14 +16,15 @@ declare global {
 
 	/// <reference types="lucia" />
 	namespace Lucia {
-		type Auth = import('$lib/server/lucia').Auth;
+		type Auth = import("$lib/server/lucia").Auth;
 		type DatabaseUserAttributes = {
 			email: string;
 			email_verified: boolean;
 			name: string;
 			username: string;
+			avatar:string
 		};
-		type DatabaseSessionAttributes = {};
+		type DatabaseSessionAttributes = object;
 	}
 }
 

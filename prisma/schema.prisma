@@ -118,8 +118,10 @@ enum FollowType {
 
 model FollowingConnection {
   id      BigInt  @id @default(autoincrement())
+  // the person that is following
   from    User   @relation("followers",fields: [followerId], references: [id])
   followerId String
+  // the person that is being followed
   to      User   @relation("following",fields: [followingId], references: [id])
   followingId String
   type    FollowType  @default(PUBLIC)
