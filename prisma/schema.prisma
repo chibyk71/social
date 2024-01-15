@@ -16,7 +16,7 @@ model User {
   email   String  @unique
   username String  @unique
   bio      String?
-  avatar   String?
+  avatar   String @default("user-avatar.svg")
   email_verified Boolean   @default(false)
   name           String
 

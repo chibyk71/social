@@ -8047,15 +8047,11 @@ svg.text-primary {
 	flex-wrap: wrap;
 	align-items: center;
 	.btn-check {
-		&:checked {
-			+ {
-				.tag-btn {
-					border-color: var(--primary);
-					background-color: var(--rgba-primary-1);
-					&:after {
-						display: block;
-					}
-				}
+		&:checked + .tag-btn {
+			border-color: var(--primary);
+			background-color: var(--rgba-primary-1);
+			&:after {
+				display: block;
 			}
 		}
 	}

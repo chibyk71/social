@@ -13,6 +13,7 @@ export default {
         dark: "rgba(var(--black),<alpha-value>)",
         secondary: "rgba(112, 79, 254,<alpha-value>)",
         lightbg: "rgba(var(--light-bg),<alpha-value>)",
+        success: "#198754",
       }
     },
   },

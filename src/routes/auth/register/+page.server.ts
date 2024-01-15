@@ -41,7 +41,8 @@ export const actions: Actions = {
                     email,
                     name,
                     username,
-                    email_verified: Boolean(false)
+                    email_verified: Boolean(false),
+                    avatar: "user-avatar.svg"
                 }
             });
 

@@ -1,12 +1,12 @@
 <script lang="ts">
     import TopBar from '$lib/nav/topBar.svelte';
 	import { GearSolid, PencilSolid } from 'svelte-awesome-icons';
-	import type { PageData } from './$types';
+	import type { PageData } from '../$types';
 	import Footer from '$lib/nav/footer.svelte';
     
     export let data:PageData
 
-	const {posts,_count} = data
+	const {posts,_count,userId,isme,avatar} = data
 </script>
 
 <TopBar title="Profile">
@@ -27,11 +27,21 @@
 					</div>
 					<div class="right-content">
 						<div class="upload-box">
-							<img src="images/stories/pic1.png" alt="/">
-							<a href="/profile/edit" class="upload-btn"><PencilSolid class="w-4 h-4" /></a>
+							<img src="images/{avatar}" alt="/">
+							<a href="/profile/edit" class="upload-btn" class:hidden={!data.isme}><PencilSolid class="w-4 h-4" /></a>
 						</div>
 					</div>
 				</div>
+				{#if !isme}
+					<ul class="list-button">
+						<li>
+							<a href={void(0)}>Following</a>
+						</li>
+						<li>
+							<a href="/chat/{userId}">Message</a>
+						</li>
+					</ul>
+				{/if}
 				<div class="info">
 					<h6>About me</h6>
 					<p>
@@ -67,28 +77,28 @@
 				</div>
 				<div class="dz-lightgallery" id="lightgallery-2">
 					<a class="gallery-box" href="images/post/pic4.png">
-						<img src="images/post/pic4.png" alt="image">
+						<img src="images/post/pic4.png" alt="post">
 					</a>
 					<a class="gallery-box" href="images/post/pic3.png">
-						<img src="images/post/pic3.png" alt="image">
+						<img src="images/post/pic3.png" alt="post">
 					</a>
 					<a class="gallery-box" href="images/post/pic2.png">
-						<img src="images/post/pic2.png" alt="image">
+						<img src="images/post/pic2.png" alt="post">
 					</a>
 					<a class="gallery-box" href="images/post/pic1.png">
-						<img src="images/post/pic1.png" alt="image">
+						<img src="images/post/pic1.png" alt="post">
 					</a>
 					<a class="gallery-box" href="images/post/pic9.png">
-						<img src="images/post/pic9.png" alt="image">
+						<img src="images/post/pic9.png" alt="post">
 					</a>
 					<a class="gallery-box" href="images/post/pic12.png">
-						<img src="images/post/pic12.png" alt="image">
+						<img src="images/post/pic12.png" alt="post">
 					</a>
 					<a class="gallery-box" href="images/post/pic5.png">
-						<img src="images/post/pic5.png" alt="image">
+						<img src="images/post/pic5.png" alt="post">
 					</a>
 					<a class="gallery-box" href="images/post/pic6.png">
-						<img src="images/post/pic6.png" alt="image">
+						<img src="images/post/pic6.png" alt="post">
 					</a>
 				</div>
 			</div>	
