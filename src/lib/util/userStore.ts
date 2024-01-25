@@ -9,9 +9,9 @@ export type UserType = {
     type?: "admin" | "user";
     phone?: number;
     verified?: boolean;
-}
+}|null
 
-const { subscribe, set, update } = writable<UserType>({});
+const { subscribe, set, update } = writable<Exclude<UserType,null>>({});
 export const User = {
     subscribe,
     set,

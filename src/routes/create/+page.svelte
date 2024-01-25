@@ -1,12 +1,18 @@
 <script lang="ts">
     import TopBar from '$lib/nav/topBar.svelte';
-	import { AngleDownSolid, CameraSolid, FileImageSolid, InstagramBrand, PlusSolid, VideoSolid, XmarkSolid } from 'svelte-awesome-icons';
+	import { AngleDownSolid, CameraSolid, FileImageSolid, InstagramBrand, PlusSolid, VideoSolid, } from 'svelte-awesome-icons';
 	import type { PageData } from './$types';
 	import Uploader from '$lib/File/Uploader.svelte';
 	import Canvas from '$lib/comp/canvas.svelte';
 	import { canvas } from '$lib/comp/canvasStore';
+	import { goto } from '$app/navigation';
     export let data: PageData;
 	let selectedFilesLenght = 0;
+	let form:HTMLFormElement
+	const user =data.user
+	if (!user) {
+		goto("/auth/login")
+	}
 </script>
 <TopBar title="create post" class="bg-white">
     <svelte:fragment slot="right">
@@ -19,10 +25,10 @@
 			<div class="post-profile">
 				<div class="left-content">
 					<div class="media media-50 rounded-circle">
-						<img src="images/stories/small/pic1.jpg" alt="/">
+						<img src="{user?.avatar}" alt="/">
 					</div>
 					<div class="ml-3">
-						<h6>Emile Stork</h6>
+						<h6>{user?.name}</h6>
 						<ul class="meta-list">
 							<li class="mr-2">
 								<a href={void(0)} on:click={()=>canvas.open("privacy")} aria-controls="offcanvasEnd1">
@@ -40,28 +46,23 @@
 									<AngleDownSolid class="w-4 h-4 ml-2"/>
 								</a>
 							</li>
-							<li>
-								<a href={void(0)}>
-									<InstagramBrand class="!w-3 h-4 mr-1"/>
-									Off
-									<AngleDownSolid class="w-4 h-4"/>
-								</a>
-							</li>
 						</ul>
 					</div>
 				</div>	
 			</div>
 			<div class="post-content-area">
-				<textarea class="form-control w-full bg-blend-normal bg-transparent" placeholder="What's on your mind?"></textarea>
+				<form action="/create/" method="post" enctype="multipart/form-data" bind:this={form}>
+					<textarea name="text" class="form-control w-full bg-transparent" placeholder="What's on your mind?"></textarea>
+				</form>
 			</div>
 		</div>
     </div>
 	<!-- Footer -->
-    <footer class="footer border-0 fixed">
+    <footer class="footer border-0 fixed bg-transparent">
         <div class="container pt-0">
 				<ul class="element-list">
-					<Uploader on:change={(e)=>selectedFilesLenght = e.detail.lenght}>
-						<li slot="label">
+					<Uploader {form} multiple={true}>
+						<li slot="label" class="w-screen">
 							<a href={void(0)}>
 								<FileImageSolid class="w-4 h-4 mr-2 fill-primary"/> Photo/Video
 							</a>

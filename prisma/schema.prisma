@@ -34,6 +34,7 @@ model User {
   posts             Post[]
   comments          Comment[]
   likes             Like[]
+  replies           Reply[]
 }
 
 
@@ -75,7 +76,7 @@ model PasswordResetToken {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement()) @unique
+  id        BigInt      @id @default(autoincrement()) @unique
   content   String
   createdAt DateTime @default(now())
   author    User     @relation(fields: [authorId], references: [id])
@@ -85,25 +86,55 @@ model Post {
   @@index([id])
   comments          Comment[]  
   likes             Like[]
+  medias   Media[]
+}
+
+model Media {
+  id BigInt @id @default(autoincrement())
+  postId BigInt
+  post Post @relation(fields: [postId],references: [id])
+
+  content String
+
+  size Int
+  type String
+
+  @@index([postId])
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement()) @unique
+  id        BigInt      @id @default(autoincrement()) @unique
   content   String
   createdAt DateTime @default(now())
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
   post      Post     @relation(fields: [postId], references: [id])
-  postId    Int      @unique
+  postId    BigInt      @unique
+
+  replies   Reply[]
+
 
   @@index([postId])
   @@index([authorId])
 }
 
+model Reply {
+  id        BigInt      @id @default(autoincrement()) @unique
+  content   String
+  createdAt DateTime @default(now())
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  comment      Comment     @relation(fields: [commentId], references: [id])
+  commentId    BigInt      @unique
+
+  @@index([commentId])
+  @@index([authorId])
+}
+
 model Like {
-  id        Int      @id @default(autoincrement()) @unique
+  id        BigInt      @id @default(autoincrement()) @unique
   userId    String
-  postId    Int      @unique
+  postId    BigInt      @unique
   post      Post     @relation(fields: [postId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
 

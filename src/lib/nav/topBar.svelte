@@ -1,4 +1,5 @@
 <script>
+	import { goBack } from '$lib/util/backBtn';
 	import { ArrowLeftSolid } from 'svelte-awesome-icons';
     export let title = "";
 	let classname = ""
@@ -11,7 +12,7 @@
 		<div class="container">
 			<div class="main-bar">
 				<div class="left-content">
-					<a href={void(0)} class="back-btn">
+					<a href={void(0)} class="back-btn" use:goBack>
 						<slot name="left"><ArrowLeftSolid /></slot>
 					</a>
 				</div>
