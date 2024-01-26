@@ -1,19 +1,21 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import TopBar from '$lib/nav/topBar.svelte';
+	import { count } from 'console';
 	import { HeartRegular } from 'svelte-awesome-icons';
 	import InfiniteLoading, { type InfiniteEvent } from 'svelte-infinite-loading';
+	import Replies from './replies.svelte';
 	let offset = 1;
 
 	let infiniteId = Symbol();
 
-	function infiniteHandler({ detail: { loaded, complete } }:InfiniteEvent) {
-		fetch('/api/comment/',{
+	function infiniteHandler({ detail: { loaded, complete } }: InfiniteEvent) {
+		fetch('/api/comment/', {
 			method: 'post',
 			body: JSON.stringify({ id: $page.params.id, offset })
 		})
-		.then(response => response.json())
-		.then(data => {
+		.then((response) => response.json())
+		.then((data) => {
 			if (data.length) {
 				offset += 1;
 				comments = [...comments, ...data];
@@ -24,18 +26,43 @@
 		});
 	}
 
-
 	let comments: {
 		id: bigint;
 		content: string;
 		createdAt: Date;
-		author: { id: string; avatar: string; name: string };
+		author: {
+			id: string;
+			avatar: string;
+			name: string;
+		};
 		replies: {
+			id: number,
 			content: string;
 			createdAt: Date;
-			author: { id: string; avatar: string; name: string };
+			author: {
+				id: string;
+				avatar: string;
+				name: string;
+			};
+			likes: {
+				id: string;
+			}[];
+			_count: {
+				likes: number;
+			};
 		}[];
+		likes: {
+			id: string;
+		}[];
+		_count: {
+			likes: number;
+		};
 	}[];
+
+	async function likeComment(e: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement; },id: bigint) {
+		const res = await fetch("/api/comment/"+id).then((r)=>r.json())
+		e.currentTarget.classList[res.staus?"add":"remove"]("active")
+	}
 </script>
 
 <TopBar title="comment" />
@@ -44,7 +71,7 @@
 <div class="page-content">
 	<div class="container profile-area bottom-content">
 		<ul class="dz-comments-list">
-			{#each comments as { id, author, replies, content }}
+			{#each comments as { id, author, replies, content, _count,likes }}
 				<li class="flex-wrap">
 					<div class="list-content">
 						<img src={author.avatar} alt="/" />
@@ -52,34 +79,15 @@
 							<h6 class="text-sm/none mb-1">{author.name}</h6>
 							<p class="!mb-2">{content}</p>
 							<ul class="bottom-item">
-								<li class="text-light">3 Like</li>
-								<li class="text-light">Reply</li>
+								<li class="text-light">{_count.likes} Like</li>
 							</ul>
 						</div>
 					</div>
 					<div class="ml-auto">
-						<div class="like-button"><HeartRegular class="ml-auto w-4 h-4" /></div>
+						<a href={void 0} on:click={(e) => { likeComment(e,id); }} class="like-button" class:active={likes.length}><HeartRegular class="ml-auto w-4 h-4" /></a>
 					</div>
 					{#if replies.length}
-						<ul class="w-full mt-4">
-							{#each replies as { author, content }}
-								<li class="parent-list">
-									<div class="list-content">
-										<img src={author.avatar} alt="/" />
-										<div>
-											<h6 class="text-sm/none mb-1">{author.name}</h6>
-											<p class="mb-2">{content}</p>
-											<ul class="bottom-item">
-												<li class="text-light">4 like</li>
-											</ul>
-										</div>
-									</div>
-									<div class="ml-auto">
-										<div class="like-button"><HeartRegular class="ml-auto w-4 h-4" /></div>
-									</div>
-								</li>
-							{/each}
-						</ul>
+						<Replies {replies} commentId={Number(id)} />
 					{/if}
 				</li>
 			{/each}
